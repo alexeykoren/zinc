@@ -19,10 +19,10 @@ impl Program {
     }
 
     pub fn to_bytes(&self) -> Vec<u8> {
-        bincode::serialize(self).expect("Failed to serialize program")
+        serde_json::to_vec_pretty(self).expect("Failed to serialize program")
     }
 
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, String> {
-        bincode::deserialize(bytes).map_err(|e| format!("{:?}", e))
+        serde_json::from_slice(bytes).map_err(|e| format!("{:?}", e))
     }
 }

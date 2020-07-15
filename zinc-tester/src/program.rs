@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use std::rc::Rc;
 
 use failure::Fail;
-use serde_json::Value as JsonValue;
+use serde_json::{Value as JsonValue, to_string_pretty};
 
 use zinc_bytecode::data::values::JsonValueError;
 use zinc_bytecode::data::values::Value;
@@ -15,6 +15,7 @@ use zinc_bytecode::program::Program;
 use zinc_compiler::Bytecode;
 use zinc_compiler::EntryAnalyzer;
 use zinc_compiler::Parser;
+use failure::_core::str::from_utf8;
 
 pub struct ProgramData {
     pub program: Program,
@@ -61,6 +62,11 @@ impl ProgramData {
 
         let program =
             Program::from_bytes(bytecode.into_bytes().as_slice()).map_err(Error::Program)?;
+
+        let bytes = program.to_bytes();
+        let text = from_utf8(bytes.as_slice());
+
+        dbg!(text.unwrap());
 
         Ok(program)
     }
