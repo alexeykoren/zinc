@@ -1,0 +1,162 @@
+{
+  "input": {
+    "Struct": [
+      [
+        "a",
+        {
+          "Scalar": {
+            "Integer": {
+              "is_signed": false,
+              "bitlength": 8
+            }
+          }
+        }
+      ],
+      [
+        "b",
+        {
+          "Scalar": {
+            "Integer": {
+              "is_signed": false,
+              "bitlength": 8
+            }
+          }
+        }
+      ]
+    ]
+  },
+  "output": {
+    "Scalar": "Boolean"
+  },
+  "bytecode": [
+    {
+      "Call": {
+        "address": 2,
+        "inputs_count": 2
+      }
+    },
+    {
+      "Exit": {
+        "outputs_count": 1
+      }
+    },
+    {
+      "FileMarker": {
+        "file": ""
+      }
+    },
+    {
+      "FunctionMarker": {
+        "function": "main"
+      }
+    },
+    {
+      "LineMarker": {
+        "line": 39
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 8
+      }
+    },
+    {
+      "LoadSequence": {
+        "address": 0,
+        "len": 1
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 12
+      }
+    },
+    {
+      "LoadSequence": {
+        "address": 1,
+        "len": 1
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 10
+      }
+    },
+    {
+      "Add": null
+    },
+    {
+      "PushConst": {
+        "value": [
+          1,
+          [
+            4
+          ]
+        ],
+        "scalar_type": {
+          "Integer": {
+            "is_signed": false,
+            "bitlength": 8
+          }
+        }
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 14
+      }
+    },
+    {
+      "Eq": null
+    },
+    {
+      "ColumnMarker": {
+        "column": 5
+      }
+    },
+    {
+      "If": null
+    },
+    {
+      "PushConst": {
+        "value": [
+          1,
+          [
+            1
+          ]
+        ],
+        "scalar_type": "Boolean"
+      }
+    },
+    {
+      "Else": null
+    },
+    {
+      "PushConst": {
+        "value": [
+          0,
+          []
+        ],
+        "scalar_type": "Boolean"
+      }
+    },
+    {
+      "EndIf": null
+    },
+    {
+      "LineMarker": {
+        "line": 38
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 1
+      }
+    },
+    {
+      "Return": {
+        "outputs_count": 1
+      }
+    }
+  ]
+}

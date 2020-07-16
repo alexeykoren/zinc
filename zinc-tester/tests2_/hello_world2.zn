@@ -1,0 +1,40 @@
+//# { "cases": [ {
+//#     "case": "zero_zero",
+//#     "input": {
+//#         "a": "0",
+//#         "b": "0"
+//#     },
+//#     "expect": false
+//# }, {
+//#     "case": "some_numbers",
+//#     "input": {
+//#         "a": "42",
+//#         "b": "25"
+//#     },
+//#     "expect": false
+//# }, {
+//#     "case": "two_and_two",
+//#     "input": {
+//#         "a": "2",
+//#         "b": "2"
+//#     },
+//#     "expect": true
+//# }, {
+//#     "case": "overflow", "should_panic": true,
+//#     "input": {
+//#         "a": "100",
+//#         "b": "200"
+//#     },
+//#     "expect": null
+//# }, {
+//#     "case": "overflow_minimal", "should_panic": true,
+//#     "input": {
+//#         "a": "100",
+//#         "b": "156"
+//#     },
+//#     "expect": null
+//# } ] }
+
+fn main(a: u8, b: u8) -> bool {
+    if a + b == 4 { true } else { false }
+}

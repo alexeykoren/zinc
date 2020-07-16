@@ -1,0 +1,17 @@
+//# { "cases": [ {
+//#     "case": "zero_zero",
+//#     "input": {
+//#         "a": "1",
+//#         "b": "1"
+//#     },
+//#     "expect": true
+//# } ] }
+
+fn main(a: u8, b: u8) -> bool {
+    let c = a + b;
+    let d = 2;
+    let e = c + d;
+    e == 4
+}
+
+

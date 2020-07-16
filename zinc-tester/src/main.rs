@@ -43,16 +43,22 @@ static PANIC_MUTEX_SYNC: &str = "Mutexes never panic";
 
 fn main() {
     let args = arguments::Arguments::from_args();
+
+    let tests_dir = match args.tests_dir {
+        Some(ref x) => x.as_str(),
+        None    => TESTS_DIRECTORY
+    };
+
     let result = if args.proof_check {
         let runner = ProofCheckRunner {
             verbosity: args.verbosity,
         };
-        main_inner(runner)
+        main_inner(runner, tests_dir)
     } else {
         let runner = EvaluationTestRunner {
             verbosity: args.verbosity,
         };
-        main_inner(runner)
+        main_inner(runner, tests_dir)
     };
 
     process::exit(match result {
@@ -77,7 +83,7 @@ fn main() {
     })
 }
 
-fn main_inner<R: TestRunner>(runner: R) -> Summary {
+fn main_inner<R: TestRunner>(runner: R, tests_dir: &str) -> Summary {
     println!(
         "[INTEGRATION] Started with {} worker threads",
         rayon::current_num_threads()
@@ -85,7 +91,7 @@ fn main_inner<R: TestRunner>(runner: R) -> Summary {
 
     let summary = Arc::new(Mutex::new(Summary::default()));
 
-    TestDirectory::new(&PathBuf::from(TESTS_DIRECTORY))
+    TestDirectory::new(&PathBuf::from(tests_dir))
         .expect(PANIC_TEST_DIRECTORY_INVALID)
         .file_paths
         .into_par_iter()

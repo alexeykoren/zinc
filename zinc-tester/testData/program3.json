@@ -1,0 +1,278 @@
+{
+  "input": {
+    "Struct": [
+      [
+        "a",
+        {
+          "Scalar": {
+            "Integer": {
+              "is_signed": false,
+              "bitlength": 8
+            }
+          }
+        }
+      ],
+      [
+        "b",
+        {
+          "Scalar": {
+            "Integer": {
+              "is_signed": false,
+              "bitlength": 8
+            }
+          }
+        }
+      ]
+    ]
+  },
+  "output": {
+    "Scalar": "Boolean"
+  },
+  "bytecode": [
+    {
+      "Call": {
+        "address": 24,
+        "inputs_count": 2
+      }
+    },
+    {
+      "Exit": {
+        "outputs_count": 1
+      }
+    },
+    {
+      "FileMarker": {
+        "file": ""
+      }
+    },
+    {
+      "FunctionMarker": {
+        "function": "funa"
+      }
+    },
+    {
+      "LineMarker": {
+        "line": 11
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 5
+      }
+    },
+    {
+      "LoadSequence": {
+        "address": 0,
+        "len": 1
+      }
+    },
+    {
+      "PushConst": {
+        "value": [
+          0,
+          []
+        ],
+        "scalar_type": {
+          "Integer": {
+            "is_signed": false,
+            "bitlength": 8
+          }
+        }
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 7
+      }
+    },
+    {
+      "Eq": null
+    },
+    {
+      "LineMarker": {
+        "line": 10
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 1
+      }
+    },
+    {
+      "Return": {
+        "outputs_count": 1
+      }
+    },
+    {
+      "FileMarker": {
+        "file": ""
+      }
+    },
+    {
+      "FunctionMarker": {
+        "function": "funb"
+      }
+    },
+    {
+      "LineMarker": {
+        "line": 15
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 5
+      }
+    },
+    {
+      "LoadSequence": {
+        "address": 0,
+        "len": 1
+      }
+    },
+    {
+      "PushConst": {
+        "value": [
+          1,
+          [
+            1
+          ]
+        ],
+        "scalar_type": {
+          "Integer": {
+            "is_signed": false,
+            "bitlength": 8
+          }
+        }
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 7
+      }
+    },
+    {
+      "Add": null
+    },
+    {
+      "LineMarker": {
+        "line": 14
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 1
+      }
+    },
+    {
+      "Return": {
+        "outputs_count": 1
+      }
+    },
+    {
+      "FileMarker": {
+        "file": ""
+      }
+    },
+    {
+      "FunctionMarker": {
+        "function": "main"
+      }
+    },
+    {
+      "LineMarker": {
+        "line": 19
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 10
+      }
+    },
+    {
+      "LoadSequence": {
+        "address": 0,
+        "len": 1
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 9
+      }
+    },
+    {
+      "Call": {
+        "address": 2,
+        "inputs_count": 1
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 21
+      }
+    },
+    {
+      "LoadSequence": {
+        "address": 1,
+        "len": 1
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 20
+      }
+    },
+    {
+      "Call": {
+        "address": 13,
+        "inputs_count": 1
+      }
+    },
+    {
+      "PushConst": {
+        "value": [
+          1,
+          [
+            1
+          ]
+        ],
+        "scalar_type": {
+          "Integer": {
+            "is_signed": false,
+            "bitlength": 8
+          }
+        }
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 24
+      }
+    },
+    {
+      "Eq": null
+    },
+    {
+      "ColumnMarker": {
+        "column": 13
+      }
+    },
+    {
+      "And": null
+    },
+    {
+      "LineMarker": {
+        "line": 18
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 1
+      }
+    },
+    {
+      "Return": {
+        "outputs_count": 1
+      }
+    }
+  ]
+}

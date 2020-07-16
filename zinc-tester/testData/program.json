@@ -1,0 +1,103 @@
+{
+  "input": {
+    "Struct": [
+      [
+        "a",
+        {
+          "Scalar": {
+            "Integer": {
+              "is_signed": false,
+              "bitlength": 8
+            }
+          }
+        }
+      ]
+    ]
+  },
+  "output": {
+    "Scalar": {
+      "Integer": {
+        "is_signed": false,
+        "bitlength": 8
+      }
+    }
+  },
+  "bytecode": [
+    {
+      "Call": {
+        "address": 2,
+        "inputs_count": 1
+      }
+    },
+    {
+      "Exit": {
+        "outputs_count": 1
+      }
+    },
+    {
+      "FileMarker": {
+        "file": ""
+      }
+    },
+    {
+      "FunctionMarker": {
+        "function": "main"
+      }
+    },
+    {
+      "LineMarker": {
+        "line": 39
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 5
+      }
+    },
+    {
+      "LoadSequence": {
+        "address": 0,
+        "len": 1
+      }
+    },
+    {
+      "PushConst": {
+        "value": [
+          1,
+          [
+            1
+          ]
+        ],
+        "scalar_type": {
+          "Integer": {
+            "is_signed": false,
+            "bitlength": 8
+          }
+        }
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 7
+      }
+    },
+    {
+      "Add": null
+    },
+    {
+      "LineMarker": {
+        "line": 38
+      }
+    },
+    {
+      "ColumnMarker": {
+        "column": 1
+      }
+    },
+    {
+      "Return": {
+        "outputs_count": 1
+      }
+    }
+  ]
+}
