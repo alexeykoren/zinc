@@ -32,7 +32,8 @@ pub enum Error {
     InvalidFileExtension(OsString, OsString),
 }
 
-static TEST_FILE_EXTENSION_DEFAULT: &str = "zn";
+pub static TEST_FILE_EXTENSION_DEFAULT: &str = "zn";
+pub static TEST_ASM_FILE_EXTENSION_DEFAULT: &str = "znb";
 
 impl TestDirectory {
     pub fn new(path: &PathBuf) -> Result<Self, Error> {
@@ -59,14 +60,16 @@ impl TestDirectory {
             let file_extension = entry_path
                 .extension()
                 .ok_or_else(|| Error::GettingFileExtension(entry_path.as_os_str().to_owned()))?;
-            if file_extension != TEST_FILE_EXTENSION_DEFAULT {
-                return Err(Error::InvalidFileExtension(
-                    entry_path.as_os_str().to_owned(),
-                    file_extension.to_owned(),
-                ));
-            }
 
-            file_paths.push(entry_path);
+            // TODO there should be only one assembly file (for now)
+            if file_extension == TEST_FILE_EXTENSION_DEFAULT || file_extension == TEST_ASM_FILE_EXTENSION_DEFAULT {
+            //     return Err(Error::InvalidFileExtension(
+            //         entry_path.as_os_str().to_owned(),
+            //         file_extension.to_owned(),
+            //     ));
+            // } else {
+                file_paths.push(entry_path);
+            }
         }
         Ok(Self { file_paths })
     }

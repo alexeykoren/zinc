@@ -14,6 +14,7 @@ use crate::file::TestFile;
 use crate::program::ProgramData;
 use crate::runners::TestRunner;
 use crate::Summary;
+use zinc_bytecode::Program;
 
 pub struct ProofCheckRunner {
     pub verbosity: usize,
@@ -27,17 +28,33 @@ impl TestRunner for ProofCheckRunner {
         test_data: &TestData,
         summary: Arc<Mutex<Summary>>,
     ) {
-        let program = match ProgramData::compile(test_file.code.as_str()) {
-            Ok(program) => program,
-            Err(error) => {
-                summary.lock().expect(crate::PANIC_MUTEX_SYNC).invalid += 1;
-                println!(
-                    "[INTEGRATION] {} {} (compiler: {})",
-                    "INVALID".red(),
-                    test_file_path.to_string_lossy(),
-                    error
-                );
-                return;
+        let program = if !test_file.assembly {
+            match ProgramData::compile(test_file.code.as_str()) {
+                Ok(program) => program,
+                Err(error) => {
+                    summary.lock().expect(crate::PANIC_MUTEX_SYNC).invalid += 1;
+                    println!(
+                        "[INTEGRATION] {} {} (compiler: {})",
+                        "INVALID".red(),
+                        test_file_path.to_string_lossy(),
+                        error
+                    );
+                    return;
+                }
+            }
+        } else {
+            match Program::from_bytes(test_file.code.as_bytes()) {
+                Ok(program) => program,
+                Err(error) => {
+                    summary.lock().expect(crate::PANIC_MUTEX_SYNC).invalid += 1;
+                    println!(
+                        "[INTEGRATION] {} {} (compiler: {})",
+                        "INVALID".red(),
+                        test_file_path.to_string_lossy(),
+                        error
+                    );
+                    return;
+                }
             }
         };
 
@@ -63,17 +80,17 @@ impl TestRunner for ProofCheckRunner {
         for test_case in test_data.cases.iter() {
             let case_name = format!("{}::{}", test_file_path.to_string_lossy(), test_case.case);
 
-            let program_data = match ProgramData::new(&test_case.input, test_file.code.as_str()) {
+            let program_data = match ProgramData::new_from_program(&test_case.input, program.clone()) {
                 Ok(program_data) => program_data,
                 Err(error) => {
                     summary.lock().expect(crate::PANIC_MUTEX_SYNC).invalid += 1;
                     println!(
-                        "[INTEGRATION] {} {} (input data: {})",
-                        "INVALID".red(),
-                        case_name,
+                        "[INTEGRATION] {} {} (setup: {})",
+                        "FAILED".red(),
+                        test_file_path.to_string_lossy(),
                         error
                     );
-                    continue;
+                    return;
                 }
             };
 
@@ -128,6 +145,14 @@ impl TestRunner for ProofCheckRunner {
             match zinc_vm::verify(&params.vk, &proof, &output) {
                 Ok(success) => {
                     if success {
+                        summary.lock().expect(crate::PANIC_MUTEX_SYNC).passed += 1;
+                        if self.verbosity > 0 {
+                            println!(
+                                "[INTEGRATION] {} {}",
+                                "PASSED".green(),
+                                case_name
+                            );
+                        }
                     } else {
                         summary.lock().expect(crate::PANIC_MUTEX_SYNC).failed += 1;
                         println!(

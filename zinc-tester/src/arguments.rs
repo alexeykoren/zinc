@@ -1,4 +1,5 @@
 use structopt::StructOpt;
+use std::path::PathBuf;
 
 #[derive(Debug, StructOpt)]
 #[structopt(
@@ -21,22 +22,30 @@ pub struct Arguments {
     pub proof_check: bool,
 
     #[structopt(
-    short = "t",
-    long = "testcases-file",
-    help = "Path to file with testcases"
+    short = "f",
+    long = "test-file",
+    help = "Path to test file"
     )]
-    pub testcases: Option<String>,
+    pub testfile: Option<PathBuf>,
 
     #[structopt(
-    short = "d",
-    long = "tests-dir",
-    help = "Path to test directory"
+        short = "t",
+        long = "testcases-file",
+        help = "Path to file with testcases"
+    )]
+    pub testcases: Option<PathBuf>,
+
+    #[structopt(
+        short = "d",
+        long = "tests-dir",
+        help = "Path to test directory"
     )]
     pub tests_dir: Option<String>,
 
-    #[structopt(short = "a", long = "assembly-input", help = "Accepts program in VM bytecode instead of .zn source file")]
-    pub assembly_input: bool,
-
-    #[structopt(short = "q", long = "quiet", help = "Doesn't show successful tests.")]
+    #[structopt(
+        short = "q",
+        long = "quiet",
+        help = "Doesn't show successful tests."
+    )]
     pub quiet: bool,
 }

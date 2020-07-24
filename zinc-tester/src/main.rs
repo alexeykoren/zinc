@@ -53,12 +53,12 @@ fn main() {
         let runner = ProofCheckRunner {
             verbosity: args.verbosity,
         };
-        main_inner(runner, tests_dir)
+        main_inner(runner, tests_dir, args.testfile, args.testcases)
     } else {
         let runner = EvaluationTestRunner {
             verbosity: args.verbosity,
         };
-        main_inner(runner, tests_dir)
+        main_inner(runner, tests_dir, args.testfile, args.testcases)
     };
 
     process::exit(match result {
@@ -83,11 +83,19 @@ fn main() {
     })
 }
 
-fn main_inner<R: TestRunner>(runner: R, tests_dir: &str) -> Summary {
+fn main_inner<R: TestRunner>(runner: R, tests_dir: &str, testfile_opt: Option<PathBuf>, testcases_opt: Option<PathBuf>) -> Summary {
     println!(
         "[INTEGRATION] Started with {} worker threads",
         rayon::current_num_threads()
     );
+
+    match testfile_opt {
+        Some(ref testfile) => run_single_test(runner, testfile, testcases_opt),
+        None    => run_dir_tests(runner, tests_dir)
+    }
+}
+
+fn run_dir_tests<R: TestRunner>(runner: R, tests_dir: &str) -> Summary {
 
     let summary = Arc::new(Mutex::new(Summary::default()));
 
@@ -110,6 +118,29 @@ fn main_inner<R: TestRunner>(runner: R, tests_dir: &str) -> Summary {
         .into_inner()
         .expect(PANIC_LAST_SHARED_REFERENCE)
 }
+
+fn run_single_test<R: TestRunner>(runner: R, test_file_path: &PathBuf, testcases_opt: Option<PathBuf>) -> Summary {
+
+    let summary = Arc::new(Mutex::new(Summary::default()));
+
+    let test_file = TestFile::try_from(test_file_path)
+        .unwrap_or_else(|_| panic!("Test file {:?} is invalid", test_file_path));
+
+    let test_data = match testcases_opt {
+        Some(ref testcases) => TestData::try_from(testcases)
+            .unwrap_or_else(|_| panic!("Test file {:?} is invalid", testcases)),
+        None    => TestData::from_str(test_file.code.as_str())
+            .unwrap_or_else(|_| panic!("Test file {:?} case data is invalid", test_file_path))
+    };
+
+    runner.run(&test_file_path, &test_file, &test_data, summary.clone());
+
+    Arc::try_unwrap(summary)
+        .expect(PANIC_LAST_SHARED_REFERENCE)
+        .into_inner()
+        .expect(PANIC_LAST_SHARED_REFERENCE)
+}
+
 
 #[derive(Debug, Default)]
 pub struct Summary {

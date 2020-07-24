@@ -40,6 +40,13 @@ impl ProgramData {
         Ok(Self { program, input })
     }
 
+    pub fn new_from_program(witness: &JsonValue, code: Program) -> Result<Self, Error> {
+        let input =
+            Value::from_typed_json(witness, &code.input).map_err(Error::JsonTypeValue)?;
+
+        Ok(Self { program: code, input })
+    }
+
     pub fn compile(code: &str) -> Result<Program, Error> {
         let lines = code.lines().collect::<Vec<&str>>();
 
